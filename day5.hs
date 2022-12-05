@@ -21,7 +21,8 @@ parseLine s = (read $ splat !! 1, read $ splat !! 3, read $ splat !! 5)
     splat = words s
 
 move :: (Int, Int, Int) -> [[Char]] -> [[Char]]
-move (count, from, to) xs = zipWith (\i x -> i == from || i == to ? (i == from ? drop count x ?: take count (xs !! (from - 1)) ++ x) ?: x) [1 ..] xs
+move (1, from, to) xs = zipWith (\i x -> i == from || i == to ? (i == from ? tail x ?: head (xs !! (from - 1)) : x) ?: x) [1 ..] xs
+move (count, from, to) xs = move (count - 1, from, to) $ move (1, from, to) xs
 
 (?:) :: a -> a -> (a, a)
 (?:) = (,)
@@ -39,3 +40,6 @@ run = do
   let file = "input.txt"
   contents <- readFile file
   print $ allMoved contents
+
+move2 :: (Int, Int, Int) -> [[Char]] -> [[Char]]
+move2 (count, from, to) xs = zipWith (\i x -> i == from || i == to ? (i == from ? drop count x ?: take count (xs !! (from - 1)) ++ x) ?: x) [1 ..] xs
