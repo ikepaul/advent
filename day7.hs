@@ -23,14 +23,8 @@ move d@(Folder s dirs) (x:xs)
       shouldMove f@(Folder s _) = s == cd ? move f xs ?: f 
       shouldMove f = f
 
-
-
-
-
-
 isFolder (Folder _ _) = True
 isFolder _ = False
-
 
 skipAhead [] _ = []
 skipAhead xs 0 = xs
@@ -42,8 +36,6 @@ skipAhead (x:xs) c
   where
     Cd cd = fromMaybe (Cd "") mc
     (mc, md) = parseLine (x)
-
-
 
 isCd (Just (Cd s)) = True
 isCd _ = False
@@ -81,16 +73,6 @@ findFiles (Folder _ dirs) = concat $ map (findFiles) dirs
 findFolders :: Dir -> [Dir]
 findFolders f@(File _ _) = []
 findFolders f@(Folder _ dirs) = f : (concat $ map (findFolders) dirs)
-
-bruh (File _ _) = 0
-bruh f = findSum f
-test = Folder "/" [File "a.hs" 100, Folder "b" [File "b.hs" 1000, Folder "c" [File "c.hs" 10000]]]
-test2 = Folder "/" [Folder "b" [Folder "c" [Folder "d" []]], Folder "Q" []]
-
-
-
-realtest = "$ ls\ndir a\n14848514 b.txt\n8504156 c.dat\ndir d\n$ cd a\n$ ls\ndir e\n29116 f\n2557 g\n62596 h.lst\n$ cd e\n$ ls\n584 i\n$ cd ..\n$ cd ..\n$ cd d\n$ ls\n4060174 j\n8033020 d.log\n5626152 d.ext\n7214296 k"
-
 
 (?:) :: a -> a -> (a, a)
 (?:) = (,)
