@@ -1,3 +1,5 @@
+
+--ghci -XPatternSynonyms -XViewPatterns .\day12.hs
 import qualified Data.Sequence as Seq hiding (zip, length)
 {-# LANGUAGE ViewPatterns, PatternSynonyms #-}
 pattern Empty   <- (Seq.viewl -> Seq.EmptyL)  
